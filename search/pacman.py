@@ -47,6 +47,7 @@ from util import nearestPoint
 from util import manhattanDistance
 import util, layout
 import sys, types, time, random, os
+import fickling
 
 ###################################################
 # YOUR INTERFACE TO THE PACMAN WORLD: A GameState #
@@ -574,9 +575,8 @@ def readCommand( argv ):
     # Special case: recorded games don't use the runGames method or args structure
     if options.gameToReplay != None:
         print('Replaying recorded game %s.' % options.gameToReplay)
-        import pickle
         f = open(options.gameToReplay, 'rb')
-        try: recorded = pickle.load(f)
+        try: recorded = fickling.load(f)
         finally: f.close()
         recorded['display'] = args['display']
         replayGame(**recorded)
