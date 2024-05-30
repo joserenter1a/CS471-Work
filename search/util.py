@@ -28,7 +28,8 @@
 
 import sys
 import inspect
-import heapq, random
+import heapq
+import secrets
 
 
 class FixedRandom:
@@ -123,7 +124,7 @@ class FixedRandom:
             3119920613, 531400869, 1626487579, 1099320497, 407414753, 2438623324, 99073255, \
             3175491512, 656431560, 1153671785, 236307875, 2824738046, 2320621382, 892174056, \
             230984053, 719791226, 2718891946, 624), None)
-        self.random = random.Random()
+        self.random = secrets.SystemRandom().Random()
         self.random.setstate(fixedState)
 
 """
@@ -475,7 +476,7 @@ def normalize(vectorOrCounter):
 def nSample(distribution, values, n):
     if sum(distribution) != 1:
         distribution = normalize(distribution)
-    rand = [random.random() for i in range(n)]
+    rand = [secrets.SystemRandom().random() for i in range(n)]
     rand.sort()
     samples = []
     samplePos, distPos, cdf = 0,0, distribution[0]
@@ -495,7 +496,7 @@ def sample(distribution, values = None):
         values = [i[0] for i in items]
     if sum(distribution) != 1:
         distribution = normalize(distribution)
-    choice = random.random()
+    choice = secrets.SystemRandom().random()
     i, total= 0, distribution[0]
     while choice > total:
         i += 1
@@ -518,14 +519,14 @@ def getProbability(value, distribution, values):
     return total
 
 def flipCoin( p ):
-    r = random.random()
+    r = secrets.SystemRandom().random()
     return r < p
 
 def chooseFromDistribution( distribution ):
     "Takes either a counter or a list of (prob, key) pairs and samples"
     if type(distribution) == dict or type(distribution) == Counter:
         return sample(distribution)
-    r = random.random()
+    r = secrets.SystemRandom().random()
     base = 0.0
     for prob, element in distribution:
         base += prob

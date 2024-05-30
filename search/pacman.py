@@ -46,7 +46,8 @@ from game import Actions
 from util import nearestPoint
 from util import manhattanDistance
 import util, layout
-import sys, types, time, random, os
+import sys, types, time, os
+import secrets
 
 ###################################################
 # YOUR INTERFACE TO THE PACMAN WORLD: A GameState #
@@ -530,7 +531,7 @@ def readCommand( argv ):
     args = dict()
 
     # Fix the random seed
-    if options.fixRandomSeed: random.seed('cs188')
+    if options.fixRandomSeed: secrets.SystemRandom().seed('cs188')
 
     # Choose a layout
     args['layout'] = layout.getLayout( options.layout )

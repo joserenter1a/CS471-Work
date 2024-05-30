@@ -50,8 +50,8 @@ import layout
 import sys
 import types
 import time
-import random
 import os
+import secrets
 
 ###################################################
 # YOUR INTERFACE TO THE PACMAN WORLD: A GameState #
@@ -562,7 +562,7 @@ def readCommand(argv):
 
     # Fix the random seed
     if options.fixRandomSeed:
-        random.seed('cs188')
+        secrets.SystemRandom().seed('cs188')
 
     # Choose a layout
     args['layout'] = layout.getLayout(options.layout)
