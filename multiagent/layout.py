@@ -15,8 +15,8 @@
 from util import manhattanDistance
 from game import Grid
 import os
-import random
 from functools import reduce
+import secrets
 
 VISIBILITY_MATRIX_CACHE = {}
 
@@ -71,17 +71,17 @@ class Layout:
         return self.walls[x][col]
 
     def getRandomLegalPosition(self):
-        x = random.choice(list(range(self.width)))
-        y = random.choice(list(range(self.height)))
+        x = secrets.choice(list(range(self.width)))
+        y = secrets.choice(list(range(self.height)))
         while self.isWall((x, y)):
-            x = random.choice(list(range(self.width)))
-            y = random.choice(list(range(self.height)))
+            x = secrets.choice(list(range(self.width)))
+            y = secrets.choice(list(range(self.height)))
         return (x, y)
 
     def getRandomCorner(self):
         poses = [(1, 1), (1, self.height - 2), (self.width - 2, 1),
                  (self.width - 2, self.height - 2)]
-        return random.choice(poses)
+        return secrets.choice(poses)
 
     def getFurthestCorner(self, pacPos):
         poses = [(1, 1), (1, self.height - 2), (self.width - 2, 1),

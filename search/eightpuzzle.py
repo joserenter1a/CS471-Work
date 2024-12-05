@@ -13,7 +13,7 @@
 
 
 import search
-import random
+import secrets
 
 # Module Classes
 
@@ -259,7 +259,7 @@ def createRandomEightPuzzle(moves=100):
     puzzle = EightPuzzleState([0,1,2,3,4,5,6,7,8])
     for i in range(moves):
         # Execute a random legal move
-        puzzle = puzzle.result(random.sample(puzzle.legalMoves(), 1)[0])
+        puzzle = puzzle.result(secrets.SystemRandom().sample(puzzle.legalMoves(), 1)[0])
     return puzzle
 
 if __name__ == '__main__':
