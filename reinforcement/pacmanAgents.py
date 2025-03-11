@@ -14,9 +14,9 @@
 
 from pacman import Directions
 from game import Agent
-import random
 import game
 import util
+import secrets
 
 
 class LeftTurnAgent(game.Agent):
@@ -56,7 +56,7 @@ class GreedyAgent(Agent):
                   for state, action in successors]
         bestScore = max(scored)[0]
         bestActions = [pair[1] for pair in scored if pair[0] == bestScore]
-        return random.choice(bestActions)
+        return secrets.choice(bestActions)
 
 
 def scoreEvaluation(state):

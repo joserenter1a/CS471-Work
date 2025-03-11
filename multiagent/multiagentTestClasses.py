@@ -25,12 +25,13 @@ import json
 
 from collections import defaultdict
 from pprint import PrettyPrinter
+import secrets
+
 pp = PrettyPrinter()
 
 from game import Agent
 from pacman import GameState
 from ghostAgents import RandomGhost, DirectionalGhost
-import random
 import math
 import traceback
 import sys
@@ -182,7 +183,7 @@ class GradingAgent(Agent):
     def registerInitialState(self, state):
         if 'registerInitialState' in dir(self.studentAgent):
             self.studentAgent.registerInitialState(state)
-        random.seed(self.seed)
+        secrets.SystemRandom().seed(self.seed)
 
     def getAction(self, state):
         GameState.getAndResetExplored()
@@ -212,7 +213,7 @@ class GradingAgent(Agent):
             self.suboptimalMoves.append(
                 (state, studentAction[0], optimalActions[0][0][0]))
         self.stepCount += 1
-        random.seed(self.seed + self.stepCount)
+        secrets.SystemRandom().seed(self.seed + self.stepCount)
         return optimalActions[0][0][0]
 
     def getSuboptimalMoves(self):
@@ -291,7 +292,7 @@ class PolyAgent(Agent):
         for agent in self.solutionAgents + self.alternativeDepthAgents:
             if 'registerInitialState' in dir(agent):
                 agent.registerInitialState(state)
-        random.seed(self.seed)
+        secrets.SystemRandom().seed(self.seed)
 
     def getAction(self, state):
         # survey agents
@@ -309,7 +310,7 @@ class PolyAgent(Agent):
         self.alternativeDepthLists.append(alternativeDepthLists)
         self.partialPlyBugLists.append(partialPlyBugLists)
         self.stepCount += 1
-        random.seed(self.seed + self.stepCount)
+        secrets.SystemRandom().seed(self.seed + self.stepCount)
         return optimalActionLists[0][0][0]
 
     def getTraces(self):
@@ -339,7 +340,7 @@ class PacmanGameTreeTest(testClasses.TestCase):
         partialPlyBugActions = [json.loads(
             x) for x in solutionDict['partialPlyBugActions'].split('\n')]
         # set up game state and play a game
-        random.seed(self.seed)
+        secrets.SystemRandom().seed(self.seed)
         lay = layout.Layout([l.strip() for l in self.layout_text.split('\n')])
         pac = GradingAgent(self.seed, studentAgent, allActions,
                            altDepthActions, partialPlyBugActions)
@@ -370,7 +371,7 @@ class PacmanGameTreeTest(testClasses.TestCase):
             return self.testFail(grades)
         elif code > 0:
             moves = pac.getSuboptimalMoves()
-            state, studentMove, optMove = random.choice(moves)
+            state, studentMove, optMove = secrets.choice(moves)
             self.addMessage('Bug: Suboptimal moves')
             self.addMessage('State:%s\nStudent Move:%s\nOptimal Move:%s' % (
                 state, studentMove, optMove))
@@ -385,7 +386,7 @@ class PacmanGameTreeTest(testClasses.TestCase):
     def writeSolution(self, moduleDict, filePath):
         # load module, set seed, create ghosts and macman, run game
         multiAgents = moduleDict['multiAgents']
-        random.seed(self.seed)
+        secrets.SystemRandom().seed(self.seed)
         lay = layout.Layout([l.strip() for l in self.layout_text.split('\n')])
         if self.alg == 'ExpectimaxAgent':
             ourPacOptions = {'expectimax': 'True'}
@@ -508,7 +509,7 @@ class EvalAgentTest(testClasses.TestCase):
 
         disp = self.question.getDisplay()
 
-        random.seed(self.seed)
+        secrets.SystemRandom().seed(self.seed)
         games = pacman.runGames(lay, agent, self.ghosts, disp, self.numGames,
                                 False, catchExceptions=True, timeout=self.maxTime)
         totalTime = time.time() - startTime

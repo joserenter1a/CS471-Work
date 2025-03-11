@@ -14,10 +14,11 @@
 
 from util import manhattanDistance
 from game import Directions
-import random, util
+import util
 from util import manhattanDistance
 
 from game import Agent, Directions
+import secrets
 
 
 class ReflexAgent(Agent):
@@ -46,7 +47,7 @@ class ReflexAgent(Agent):
         scores = [self.evaluationFunction(gameState, action) for action in legalMoves]
         bestScore = max(scores)
         bestIndices = [index for index in range(len(scores)) if scores[index] == bestScore]
-        chosenIndex = random.choice(bestIndices)  # Pick randomly among the best
+        chosenIndex = secrets.choice(bestIndices)  # Pick randomly among the best
 
         "Add more of your code here if you want to"
 
