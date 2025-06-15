@@ -14,7 +14,7 @@
 
 from game import Agent
 from game import Directions
-import random
+import secrets
 
 class KeyboardAgent(Agent):
     """
@@ -51,7 +51,7 @@ class KeyboardAgent(Agent):
         if (self.STOP_KEY in self.keys) and Directions.STOP in legal: move = Directions.STOP
 
         if move not in legal:
-            move = random.choice(legal)
+            move = secrets.choice(legal)
 
         self.lastMove = move
         return move

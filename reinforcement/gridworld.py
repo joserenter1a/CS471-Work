@@ -12,12 +12,12 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
 
-import random
 import sys
 import mdp
 import environment
 import util
 import optparse
+import secrets
 
 class Gridworld(mdp.MarkovDecisionProcess):
     """
@@ -197,7 +197,7 @@ class GridworldEnvironment(environment.Environment):
     def getRandomNextState(self, state, action, randObj=None):
         rand = -1.0
         if randObj is None:
-            rand = random.random()
+            rand = secrets.SystemRandom().random()
         else:
             rand = randObj.random()
         sum = 0.0
@@ -499,7 +499,7 @@ if __name__ == '__main__':
             opts.episodes = 10
         class RandomAgent:
             def getAction(self, state):
-                return random.choice(mdp.getPossibleActions(state))
+                return secrets.choice(mdp.getPossibleActions(state))
             def getValue(self, state):
                 return 0.0
             def getQValue(self, state, action):
